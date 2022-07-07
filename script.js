@@ -56,10 +56,7 @@ eraser.addEventListener("click",(e)=>{
     input.addEventListener("change", (e)=>{ 
         let file=input.files[0];
         let url=URL.createObjectURL(file);
-
-        let stickyCont=document.createElement("div");
-        stickyCont.setAttribute("class","sticky-cont");
-        stickyCont.innerHTML=`
+        let stickyTemplateHtml=`
         <div class="header-cont">
         <div class="minimize"></div>
         <div class="remove"></div>
@@ -67,35 +64,30 @@ eraser.addEventListener("click",(e)=>{
         <div class="note-cont">
         <img src= "${url}" />
         </div>
-        `;
-    
-        document.body.appendChild(stickyCont);
-    
-         let minimize=document.querySelector(".minimize");
-         let remove=document.querySelector(".remove");
-         noteActions(minimize,remove,stickyCont);
-    
-        stickyCont.onmousedown = function(event) {
-             dragAndDrop(stickyCont,event);      
-          };
-          
-          stickyCont.ondragstart = function() {
-            return false;
-          };
+        `
+       createSticky(stickyTemplateHtml);
     })
   })
+
+ 
   sticky.addEventListener("click",(e)=>{
-    let stickyCont=document.createElement("div");
-    stickyCont.setAttribute("class","sticky-cont");
-    stickyCont.innerHTML=`
+    let stickyTemplateHtml=`
     <div class="header-cont">
     <div class="minimize"></div>
     <div class="remove"></div>
     </div>
     <div class="note-cont">
-    <textarea ></textarea>
+    <textarea spellcheck="false" ></textarea>
     </div>
     `;
+    createSticky(stickyTemplateHtml);
+
+  })
+
+  function createSticky(stickyTemplateHtml){
+    let stickyCont=document.createElement("div");
+    stickyCont.setAttribute("class","sticky-cont");
+    stickyCont.innerHTML=stickyTemplateHtml;
 
     document.body.appendChild(stickyCont);
 
@@ -110,7 +102,7 @@ eraser.addEventListener("click",(e)=>{
       stickyCont.ondragstart = function() {
         return false;
       };
-  })
+  }
 
   function noteActions(minimize,remove,stickyCont){
      remove.addEventListener("click",(e)=>{
